@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tlgr.ph</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <script type="text/javascript">
+      function onEmpty(value, elementId) {
+        element = document.getElementById(elementId);
+        if (value == "") {
+          element.classList.add("hidden");
+        } else {
+          element.classList.remove("hidden");
+        }
+      }
+
+      function onInput() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      }
+
+      function onLoad() {
+        const textAreas = document.getElementsByTagName('textarea');
+        for (let i = 0; i < textAreas.length; i++) {
+          textAreas[i].setAttribute('style', 'height:' + (textAreas[i].scrollHeight) + 'px;overflow-y:hidden;resize:None');
+          textAreas[i].addEventListener("input", onInput, false);
+          textAreas[i].dispatchEvent(new Event('input'));
+        }
+      }
+
+    </script>
+  </head>
+
+  <body onload="onLoad()">
+
+    <form action="" method="post">
+      {{ form.csrf_token() }}
+      <div id="grid">
+        <div class="title-label title header-font title-label"><label id="title-label" class="hidden">Title</label></div>
+        <div class="title-text">
+          {{ form.title(class_="title header-font title-text", placeholder="Title", rows=1, oninput="onEmpty(this.value, 'title-label')", readonly=readonly) }}
+        </div>
+        <div class="submit">
+          {% if not readonly %}
+          {{ form.submit(class_="button") }}
+          {% endif %}
+        </div>
+        <div class="author-label author header-font"><label id="author-label" class="hidden">Author</label></div>
+        <div class="author-text">
+          {{ form.author(class_="author header-font", placeholder="Your name", rows=1, oninput="onEmpty(this.value, 'author-label')", readonly=readonly) }}
+        </div>
+        <div class="story-text">
+          {{ form.story(class_="story", placeholder="Your story...", rows=1, readonly=readonly) }}
+        </div>
+      </div>
+    </form>
+  </body>
+
+</html>
+

@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    env_file:
+      - ".env"
+    ports:
+      - "15000:${FLASK_RUN_PORT}"
+    volumes:
+      - ./app:/deploy/app
+  redis:
+    image: "redis:alpine"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - ./data:/data

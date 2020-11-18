@@ -1,0 +1,4 @@
+redis
+flask
+Flask-WTF
+flask-bootstrap
